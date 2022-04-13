@@ -1,0 +1,22 @@
+= render 'layouts/header'
+- breadcrumb :illustration_tag, @breadcrumbs
+.container
+  .tag_title
+    ==  breadcrumbs separator: " &rsaquo; "
+  .tag_title
+    h3.left タグから選ぶ
+  .tag_list
+    - @tags.each do |tag|
+      a.btn.btn-primary href="/illustrations/tag?tag_id=#{tag.id}" role="button" style="margin:2px;" #{tag.name}
+
+  .image_list
+    .title
+      h3.left 全てのイラスト
+    - @illustrations.each do |illustration|
+      .contents
+        = link_to illustration_path(illustration.id)
+          = image_tag(illustration.illustration.thumb.url)
+          p = illustration.name
+      = paginate @illustrations
+
+= render 'layouts/footer'

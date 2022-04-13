@@ -1,0 +1,15 @@
+= render 'layouts/header'
+
+.login
+  h2.login-header パスワードをお忘れですか？
+  .login-container
+    = form_for(resource, as: resource_name, url: password_path(resource_name)) do |f|
+      .wrap
+        p メールアドレスを入力
+        .field
+          = f.email_field :email, placeholder: "メールアドレス", style: 'width:100%'
+        br
+        div
+          = f.submit "再設定リンクを送信", class: 'btn btn-primary', style: 'width:100%'
+
+= render 'layouts/footer'

@@ -1,0 +1,29 @@
+= render 'layouts/header'
+.container
+  = form_tag("/search", method: "get", class: "form-inline justify-content-center top_form") do
+    = text_field_tag(:keyword, "", class: "form-control mr-sm-2", placeholder: "Search")
+    = select_tag('type', options_for_select(['画像','イラスト']), class: "form-control mr-sm-2")
+    = submit_tag("Search", class: "btn btn-outline-success my-2 my-sm-0")
+
+  .image_list
+    h3.left 新着画像
+    - @images.each do |image|
+      .contents
+        = link_to image_path(image.id)
+          = image_tag(image.image.thumb.url)
+          p = image.name
+  .image_list
+    h3.left 新着イラスト
+    - @illustrations.each do |illustration|
+      .contents
+        = link_to illustration_path(illustration.id)
+          = image_tag(illustration.illustration.thumb.url)
+          p = illustration.name
+  / .top_new_arrivals
+  /   h3.left 新着動画
+  /   - @movies.each do |movie|
+  /     .contents
+  /       = link_to movie_path(movie.id)
+  /         = image_tag(movie.movie.screenshot.url)
+  /         p =	movie.name
+= render 'layouts/footer'

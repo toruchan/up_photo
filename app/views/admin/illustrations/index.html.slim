@@ -1,0 +1,4 @@
+h1 イラスト登録
+= form_for(@illustration, :url => {:action => :create}) do |f| 
+  = f.file_field :illustration, accept: 'image/jpg,image/jpeg,image/png,image/gif'
+  = f.submit

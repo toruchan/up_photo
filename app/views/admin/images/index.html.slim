@@ -1,0 +1,3 @@
+= form_for(@image, :url => {:action => :create}) do |f| 
+  = f.file_field :image, accept: 'image/jpg,image/jpeg,image/png,image/gif'
+  = f.submit

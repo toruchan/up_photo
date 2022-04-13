@@ -1,0 +1,84 @@
+= render 'layouts/header'
+.container
+  .detail
+    .left_block
+      = image_tag(@image.image.thumb.url)
+      p = @image.name
+      - @image.image_tags.each do |tag|
+        / form
+        /   = button_to tag.name, "/images/tag?tag_id=#{tag.id}", class: 'btn btn-primary btn-sm'
+        a.btn.btn-primary.btn-sm href="/images/tag?tag_id=#{tag.id}" style="margin-right:2px;" #{tag.name}
+    .right_block
+      - if user_signed_in?
+        - if current_user.plan_id.present?
+          h2 style="text-align: left;margin-bottom: 30px;border-bottom: solid 3px black" サイズ
+            #{@image.image.height} × #{@image.image.width}
+          a href="/terms#banned" ！利用可能な用途と禁止事項
+
+          - if current_user.download_limit.limit_of_image > 0
+            = button_to "ダウンロード(残り#{current_user.download_limit.limit_of_image}枚)", image_download_path(@image), id: 'imagedl', class: 'btn btn-info', data: { turbolinks: false, limit: current_user.download_limit.limit_of_image}, method: :post, style: 'width:100%'
+          - else
+            = button_to "ダウンロード(残り#{current_user.download_limit.limit_of_image}枚)", image_download_path(@image), disabled: true, class: 'btn btn-info', data: { turbolinks: false }, method: :post, style: 'width:100%;background-color:#CCCCCC;border-color:#CCCCCC;'
+
+        - else
+          a.btn.btn-primary href="/card/new" 決済情報を登録
+      - else
+        = form_for(resource_name, as: resource_name, url: session_path(resource)) do |f|
+          .field
+            = f.label :email
+            br
+            = f.email_field :email, autofocus: true, autocomplete: "email", style: 'width:100%'
+          br
+          .field
+            = f.label :password
+            br/
+            = f.password_field :password, autocomplete: "current-password", style: 'width:100%'
+          br
+          .field
+            a
+              = link_to "パスワードをお忘れですか？", password_path(resource_name), method: :post
+          br/
+          .field
+            = f.submit "ログイン", class: 'btn btn-primary', style: 'width:100%'
+          br/
+          div
+            a アカウントをまだお持ちではない場合は
+            a href="/users/sign_up" 新規登録
+
+  .image_list
+    h3.left 類似画像
+    - if @similar_image.present?
+      - @similar_image.each do |similar_image|
+        .contents
+          = link_to image_path(similar_image.id)
+            = image_tag(similar_image.image.thumb.url)
+            p = similar_image.name
+    - else
+      p 類似の画像はありません
+
+  .image_list
+    h3.left 同じモデルの画像
+    - if @images_of_same_model.present?
+      - @images_of_same_model.each do |iosm|
+        .contents
+          = link_to image_path(iosm.id)
+            = image_tag(iosm.image.thumb.url)
+            p = iosm.name
+    - else
+      p 同じモデルの画像はありません
+
+= render 'layouts/footer'
+
+javascript:
+  $('#imagedl').click( function () {
+    var imagedl = document.getElementById('imagedl')
+    var limit = imagedl.getAttribute('data-limit')
+    limit = limit -1
+    imagedl.setAttribute('data-limit', limit)
+    imagedl.value = `ダウンロード(残り${limit}枚)`;
+    if (limit < 1){
+      $('#imagedl').prop("disabled", true);
+      $('#imagedl').css({'background-color':'#CCCCCC','border-color':'#CCCCCC'})
+      $('#imagedl').closest('form').submit();
+    }
+  });

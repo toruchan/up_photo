@@ -1,0 +1,30 @@
+# Ignore Byebug command history file.
+.byebug_history
+
+# Ignore node_modules
+node_modules/
+
+# Ignore precompiled javascript packs
+/public/packs
+/public/packs-test
+/public/assets
+/public/uploads
+
+# Ignore yarn files
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
+
+# Ignore uploaded files in development
+/storage/*
+!/storage/.keep
+
+/tmp
+/log
+/.bundle
+/vendor
+.env
+
+yarn.lock
+config/master.key
+# End of https://www.gitignore.io/api/rails~

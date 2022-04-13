@@ -1,0 +1,28 @@
+= render 'layouts/header'
+
+.login
+  h2.login-header パスワード再設定
+  .login-container
+    - if resource.errors.present?
+      - resource.errors.full_messages.each do |msg|
+        p.alert.alert-danger
+          = msg
+    = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
+      = f.hidden_field :reset_password_token
+      .field
+        = f.label :password, "新しいパスワードを入力"
+        br/
+        - if @minimum_password_length
+          em
+            | (#{@minimum_password_length} characters minimum)
+          br/
+        = f.password_field :password, autofocus: true, autocomplete: "new-password"
+      .field
+        = f.label :password_confirmation, "Confirm new password"
+        br/
+        = f.password_field :password_confirmation, autocomplete: "off"
+        br
+      .actions
+        = f.submit "変更"
+
+= render 'layouts/footer'

@@ -1,0 +1,38 @@
+#registrationModal.modal.fade
+  .modal-dialog
+    .modal-content
+      .modal-header
+        h5.modal-title アカウント登録
+        button.close data-dismiss="modal" type="button" 
+          span ×
+      .modal-body
+        div
+          br/
+          = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+            .wrap
+              p メールアドレス
+              .field
+                = f.email_field :email, id: 'em', placeholder: "メールアドレス", style: 'width:100%'
+              br
+              p パスワード
+              .field
+                = f.password_field :password, autocomplete: "off",	placeholder: "パスワード", style: 'width:100%', id: 'pass'
+              br/
+              .field
+                = f.hidden_field :plan_id, id: 'pid',  value: 1
+              br/
+
+              / div
+              /   = f.submit "登録", class: 'btn btn-primary', style: 'width:100%'
+
+
+          / form
+          /   .form-group
+          /     label.control-label for="recipient-name"  メールアドレス
+          /     input#recipient-name.form-control type="text" /
+          /   .form-group
+          /     label.control-label for="message-text" パスワード
+          /     input#message-text.form-control
+          button.btn.btn-success.mt10 id="registrationToAgreement" style="width:100%;border-top:1px solid #e9ecef" data-target="#agreementModal" data-toggle="modal" 契約手続きへ
+      .modal-footer
+        button.btn.btn-danger data-dismiss="modal" type="button"  Close

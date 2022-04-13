@@ -1,0 +1,22 @@
+= render 'layouts/header'
+
+.login
+  h2.login-header Log in
+  .login-container
+    = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+      .wrap
+       .field
+         = f.email_field :email, placeholder: "メールアドレスまたはユーザ名", style: 'width:100%'
+       br
+       .field
+         = f.password_field :password, autocomplete: "off",	placeholder: "パスワード", style: 'width:100%'
+       br/
+       div
+         - if devise_mapping.rememberable?
+           .field
+             a
+               = link_to "パスワードをお忘れですか？", password_path(resource_name), id: "logInToPasswordReminder", class: "btn", method: :post
+       div
+         = f.submit "ログイン", class: 'btn btn-primary', style: 'width:100%'
+
+= render 'layouts/footer'

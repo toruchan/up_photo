@@ -1,0 +1,22 @@
+= render 'layouts/header'
+- breadcrumb :movie_tag, @breadcrumbs
+.container
+  .tag_title
+    ==  breadcrumbs separator: " &rsaquo; "
+  .tag_title
+    h2 タグから選ぶ
+  .tag_list
+    - @tags.each do |tag|
+      a.btn.btn-primary href="/movies/tag?tag_id=#{tag.id}" role="button" style="margin:2px;" #{tag.name}
+
+  .image_list
+    .title
+      h2 全ての動画
+    - @movies.each do |movie|
+      = link_to movie_path(movie.id)
+        .contents
+          = image_tag(movie.movie.screenshot.url)
+          p = movie.name
+      = paginate @movies
+
+= render 'layouts/footer'

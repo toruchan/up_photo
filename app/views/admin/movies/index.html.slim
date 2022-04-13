@@ -1,0 +1,4 @@
+h1 動画登録
+= form_for(@movie, :url => {:action => :create}) do |f| 
+  = f.file_field :movie, accept: 'video/*'
+  = f.submit

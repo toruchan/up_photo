@@ -1,0 +1,19 @@
+#passwordReminderModal.modal.fade
+  .modal-dialog
+    .modal-content
+      .modal-header
+        h5.modal-title パスワード再設定
+        button.close data-dismiss="modal" type="button" 
+          span ×
+      .modal-body
+        div
+          br/
+          = form_for(resource, as: resource_name, url: password_path(resource_name)) do |f|
+            .wrap
+              .field
+                = f.email_field :email, placeholder: "メールアドレス", style: 'width:100%', id: 'password_reminder_email'
+              br/
+              div
+                = f.submit "再設定リンクを送信", class: 'btn btn-primary', style: 'width:100%'
+      .modal-footer
+        button.btn.btn-danger data-dismiss="modal" type="button"  Close

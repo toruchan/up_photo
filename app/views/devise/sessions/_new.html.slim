@@ -1,0 +1,34 @@
+#logInModal.modal.fade
+  .modal-dialog
+    .modal-content
+      .modal-header
+        h5.modal-title ログイン
+        button.close data-dismiss="modal" type="button" 
+          span ×
+      .modal-body
+        div
+          br/
+          = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+            .wrap
+              .field
+                = f.email_field :email, placeholder: "メールアドレスまたはユーザ名", style: 'width:100%'
+              br
+              .field
+                = f.password_field :password, autocomplete: "off",	placeholder: "パスワード", style: 'width:100%'
+              br/
+              div
+                - if devise_mapping.rememberable?
+                  .field
+                    a 
+                      = link_to "パスワードをお忘れですか？", password_path(resource_name), id: "logInToPasswordReminder", class: "btn", method: :post
+              div
+                = f.submit "ログイン", class: 'btn btn-primary', style: 'width:100%'
+      .modal-body style="border-top:1px solid #e9ecef"
+        div
+          a アカウントをまだお持ちではありませんか？
+        div
+          a.btn.btn-success.mt10 id="logInToRegistration" data-target="#planModal" data-toggle="modal" type="button" style="margin-right:20px;width:100%;color:#FFFFFF" 新規登録
+          / a.btn.btn-success.mt10 href="/users/sign_up" style="width:100%" アカウント登録
+          - render "devise/shared/links"
+      .modal-footer
+        button.btn.btn-danger data-dismiss="modal" type="button"  Close

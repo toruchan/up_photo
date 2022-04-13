@@ -1,0 +1,446 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ */
+@import "bootstrap";
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* フッタと同じ高さに設定 */
+  margin-bottom: 60px;
+
+  /* 一番下までスクロールした時の余白 */
+  padding-bottom: 0;
+}
+
+header {
+    background: #000;
+    .btn-outline-secondary {
+        color: #fff;
+        background-color: transparent;
+        background-image: none;
+        border-color: #fff;
+    }
+
+    .nav-link {
+        color: #fff;
+        display: block;
+        padding: 0.5rem 1rem;
+    }
+
+    .dropdown-item {
+        display: block;
+        width: 100%;
+        padding: 0.25rem 1.5rem;
+        clear: both;
+        font-weight: 400;
+        color: #fff;
+        text-align: inherit;
+        white-space: nowrap;
+        background-color: transparent;
+        border: 0;
+    }
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  margin-top: 30px;
+  margin-bottom: 0;
+  width: 100%;
+
+  /* フッタの高さ */
+  height: 60px;
+  background: #000;
+  color: #000;
+
+  a {
+      color: #fff;
+  }
+}
+
+h1 {
+    /*線の種類（実線） 太さ 色*/
+    text-align: left;
+    margin-bottom: 30px;
+    border-bottom: solid 3px black;
+}
+
+.container {
+    margin-bottom: 30px;
+    display: table;
+}
+
+// TOPの画像表示
+.image_list {
+    margin: 0 30px;
+    // text-align: center;
+    margin-bottom: 20px;
+    // margin-left: 1%;
+    // margin-right: 1%;
+    // background: #F4F4F4;
+
+    h1 {
+        /*線の種類（実線） 太さ 色*/
+        text-align: left;
+        border-bottom: solid 3px black;
+    }
+
+    .left {
+        text-align: left;
+    }
+
+    .contents {
+        // float: left;
+        height: 280px;
+        width: 250px;
+        // border: solid 1px #666666;
+        display: -webkit-inline-box;
+        // display: flex;
+        // flex-direction: row;
+        // justify-content: space-evenly;
+        position: relative;
+        text-align:	center;
+        margin: 30px 0px 30px 0px;
+        // height: 220px;
+        img {
+            max-height: 250px;
+            max-width: 200px;
+            position: absolute;
+            // top: 5px;
+            left: 0;
+            right: 0;
+            bottom: 30px;
+            margin: auto;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        p {
+            position: absolute;
+            height: 20px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+        }
+        a{
+            color:black;
+        }
+    }
+    .contents:hover{
+        opacity: 0.6;
+        transition-duration: 0.3s;
+    }
+}
+
+.top_form {
+    height: 100px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.grid {
+    width: 1000px;
+}
+
+
+
+// ドロップメニューをホバー表示
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.modal-body {
+    p {
+        text-align: left;
+    }
+}
+
+.modal-dialog {
+    margin: 1.75rem auto;
+    max-width: none;
+    text-align: -webkit-center;
+}
+
+.modal-content {
+    width:800px;
+}
+
+table{
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  margin-top:50px;
+  text-align:center;
+}
+
+// 料金プランのテーブルデザイン
+table tr{
+  border-bottom: solid 1px #eee;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+table tr.content:hover{
+  background-color: #d4f0fd;
+}
+
+table tr.content:checked{
+  background-color: #d4f000;
+}
+
+table th,table td{
+  text-align: center;
+  width: 20%;
+  padding: 10px 0;
+}
+
+table td.icon{
+  background-size: 35px;
+  background-position: left 5px center;
+  background-repeat: no-repeat;
+  padding-left: 30px;
+}
+
+table td.icon.bird{
+  background-image: url(icon-bird.png)
+}
+
+table td.icon.whale{
+  background-image: url(icon-whale.png)
+}
+
+table td.icon.crab{
+  background-image: url(icon-crab.png)
+}
+
+// 詳細ページ
+.detail{
+    height: 30%;
+    margin: 0 30px;
+    margin-top: 30px;
+
+    position: relative;
+    text-align:	center;
+    margin: 20px 7px 7px 0px;
+
+    //justify-content: center;
+    align-items: center;
+    .left_block{
+        width: 40%;
+        display: inline-table;
+        vertical-align: middle;
+    }
+    .right_block{
+        width:40%;
+        display: inline-table;
+        vertical-align: middle;
+    }
+    .contents{
+        height: 330px;
+        width: 330px;
+        border: solid #808000;
+        display: -webkit-inline-box;
+        // display: flex;
+        // flex-direction: row;
+        // justify-content: space-evenly;
+        position: relative;
+        text-align:	center;
+        margin: 0px 7px 7px 0px;
+        // height: 220px;
+        img {
+            max-height: 280px;
+            max-width: 280px;
+            position: absolute;
+            top: 5px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+        }
+        p {
+            position: absolute;
+            height: 20px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+        }
+
+    }
+}
+// tag一覧ページ
+.tag_title{
+    margin-top: 30px;
+}
+
+.tag_list{
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.hogeimage_list{
+
+    position: relative;
+    text-align:	center;
+    margin: 20px 7px 7px 0px;
+
+    .title{
+        text-align: left;
+        border-bottom: solid 3px black;
+        margin-bottom: 20px;
+    }
+
+    .contents{
+
+        height: 330px;
+        width: 330px;
+        border: solid #808000;
+        display: -webkit-inline-box;
+        // display: flex;
+        // flex-direction: row;
+        // justify-content: space-evenly;
+        position: relative;
+        text-align:	center;
+        margin: 0px 7px 7px 0px;
+        // height: 220px;
+        img {
+            max-height: 280px;
+            max-width: 280px;
+            position: absolute;
+            top: 5px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+        }
+        p {
+            position: absolute;
+            height: 20px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+        }
+
+    }
+
+}
+
+// ログイン画面
+.login {
+  width: 400px;
+  margin: 16px auto;
+  font-size: 16px;
+}
+
+/* Reset top and bottom margins from certain elements */
+.login-header,
+.login p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* The triangle form is achieved by a CSS hack */
+.login-triangle {
+  width: 0;
+  margin-right: auto;
+  margin-left: auto;
+  border: 12px solid transparent;
+  border-bottom-color: #28d;
+}
+
+.login-header {
+  background: #000;
+  padding: 20px;
+  font-size: 1.4em;
+  font-weight: normal;
+  text-align: center;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.login-container {
+  background: #ebebeb;
+  padding: 12px;
+}
+
+.payment-info {
+    margin: 15px;
+}
+
+/* Every row inside .login-container is defined with p tags */
+.login p {
+  padding: 12px;
+}
+
+.login input {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  border-width: 1px;
+  border-style: solid;
+  padding: 16px;
+  outline: 0;
+  font-family: inherit;
+  font-size: 0.95em;
+}
+
+#user_plan_id, 
+.login input[type="email"],
+.login input[type="password"] {
+  background: #fff;
+  border-color: #bbb;
+  color: #555;
+  width: 100%;
+}
+
+/* Text fields' focus effect */
+.login input[type="email"]:focus,
+.login input[type="password"]:focus {
+  border-color: #888;
+}
+
+.login input[type="submit"] {
+  background: #000;
+  border-color: transparent;
+  color: #fff;
+  cursor: pointer;
+}
+
+.login input[type="submit"]:hover {
+    background: #555;
+}
+
+/* Buttons' focus effect */
+.login input[type="submit"]:focus {
+  border-color: #05a;
+}
+
+.input_wrap {
+    text-align: center;
+}
+
+.evaluation__good {
+  display: none;
+}
+
+.g-recaptcha {
+  margin-right:auto;
+  margin-left:auto;
+  text-align: center;
+  width:300px;
+}

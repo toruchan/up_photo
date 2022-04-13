@@ -1,0 +1,32 @@
+ja:
+  enums:
+    plan:
+      period:
+        monthly: '月額'
+        yearly: '年額'
+  activerecord: &activerecord
+    models:
+      image: "画像"
+      image_category: "画像カテゴリ"
+      image_tag: "画像タグ"
+      image_model: "画像モデル"
+      illustration: "イラスト"
+      illustration_category: "イラストカテゴリ"
+      illustration_tag: "イラストタグ"
+      illustration_model: "イラストモデル"
+      movie: "動画"
+      movie_category: "動画カテゴリ"
+      movie_tag: "動画タグ"
+      movie_model: "動画モデル"
+      download_limit: "ダウンロード数管理"
+      user: "ユーザ"
+      plan: "プラン"
+      inquiry: "お問い合わせ"
+    attributes:
+      inquiry:
+        name: "名前"
+        email: "メールアドレス"
+        detail: "お問い合わせ内容"
+  recaptcha: 
+    errors: 
+      verification_failed: 'reCAPTCHA認証に失敗しました。' 

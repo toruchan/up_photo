@@ -1,0 +1,37 @@
+= render 'layouts/header'
+
+.login
+  h2.login-header Sign Up
+  .login-container
+    - if resource.errors.present?
+      - resource.errors.full_messages.each do |msg|
+        p.alert.alert-danger
+          = msg
+
+    = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+      .wrap
+        p メールアドレス
+        .field
+          = f.email_field :email, placeholder: "メールアドレス", style: 'width:100%'
+        br
+        p パスワード
+        .field
+          = f.password_field :password, autocomplete: "off", placeholder: "パスワード", style: 'width:100%'
+        br
+        p ご契約プラン
+        .field
+          = f.collection_select :plan_id, @plans, :id, :name, {}, {class: "custom-select custom-select-lg mb-3", style: 'width:100%', id: 'select_plan'}
+        
+        button.btn.btn-success.mt10 data-target="#planModal" data-toggle="modal" type="button" style="width:100%;border-top:1px solid #e9ecef;margin-right:5px;margin-bottom:20px;;" 料金プランを確認
+
+        script src="https://checkout.pay.jp" class="payjp-button" data-key="#{ENV['PAY_JP_KEY']}" data-text="カード情報を入力" style="width:100%" data-partial="true"
+
+        .field
+          br
+          = recaptcha_tags
+          br
+        
+        div
+          = f.submit "新規登録", class: 'btn btn-primary', style: 'width:100%'
+
+= render 'layouts/footer'

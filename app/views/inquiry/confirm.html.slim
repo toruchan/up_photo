@@ -1,0 +1,27 @@
+= render 'layouts/header'
+
+div style="margin:10%"
+  = form_for @inquiry, :url => thanks_inquiry_index_path do |f|
+    .page-header
+      h1 お問い合わせ
+
+    table.table
+      tr
+        th 名前
+        td
+          = f.hidden_field :name
+          = @inquiry.name
+      tr
+        th メールアドレス
+        td
+          = f.hidden_field :email
+          = @inquiry.email
+      tr
+        th お問い合わせ内容
+        td
+          = f.hidden_field :detail
+          = simple_format(@inquiry.detail)
+    .input_wrap
+      = f.submit '送信', :class => 'btn btn-primary'
+
+= render 'layouts/footer'

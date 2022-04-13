@@ -1,0 +1,18 @@
+ul.nav.nav-tabs
+  li.nav-item
+    a.nav-link.active href="#"  画像
+  li.nav-item
+    a.nav-link href="#"  イラスト
+  li.nav-item
+    a.nav-link href="#"  動画
+
+nav.navbar.navbar-light.bg-light
+  form.form-inline
+    button.btn.btn-outline-success type="button"  Main button
+    button.btn.btn-sm.btn-outline-secondary type="button"  Smaller button
+
+- @images.each do |image|
+  a
+    = image_tag(image.image.to_s)
+a
+  = link_to 'LOGOUT', destroy_user_session_path, method: :delete

@@ -1,0 +1,51 @@
+#agreementModal.modal.fade
+  .modal-dialog
+    .modal-content
+      .modal-header
+        h5.modal-title 登録内容の確認
+        button.close data-dismiss="modal" type="button" 
+          span ×
+      .modal-body
+        / div
+          / form
+          /   .form-group
+          /     label.control-label for="recipient-name" 契約プラン
+          /     select.custom-select.custom-select-lg.mb-3 style="width:100%;border-top:1px solid #e9ecef"
+          /       - @plans.each do |plan|
+          /         option value="#{plan.id}" #{plan.name}：#{plan.period_i18n}
+
+        div style="text-align:left;"
+          a id="agreementToPlan" href="#" data-target="#planModal" data-toggle="modal" プラン選択へ戻る
+        br
+
+        div
+          = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+            .form-group
+              p ご契約プラン
+              = f.collection_select :plan_id, @plans, :id, :name, {}, {class: "custom-select custom-select-lg mb-3", style: 'width:100%', id: 'select_plan', label: '契約プラン'}
+
+            p id="total" style="text-align:right;font-size:22px;font-weight:bold;color:#d23232" 合計：10,000円
+
+            script src="https://checkout.pay.jp" class="payjp-button" data-key="#{ENV['PAY_JP_KEY']}" data-text="カード情報を入力" style="width:100%" data-partial="true"
+            br
+            p style="color:#d23232;text-align:center" ※決済完了後はキャンセルできませんのでご注意ください
+            .custom-control.custom-checkbox
+              input#agreementCheck.custom-control-input type="checkbox"
+              label.custom-control-label for="agreementCheck"
+                = link_to '利用規約', '/terms'
+                | 及び
+                =	link_to	'プライバシーポリシー', '/terms'
+                | に同意する
+            br/
+
+            = recaptcha_tags
+            br
+
+            = f.hidden_field :email, id: 'hem'
+            = f.hidden_field :password, id: 'hpass'
+            = f.hidden_field :plan_id, id: 'hpid'
+            = f.submit "登録", class: 'btn btn-primary', id: 'agree', style: 'width:100%', disabled: true
+          / button.btn.btn-success.mt10 id="agreementToThanks" style="width:100%;border-top:1px solid #e9ecef" data-target="#thanksModal" data-toggle="modal" disabled=true 注文を完了する
+
+      .modal-footer
+        button.btn.btn-danger data-dismiss="modal" type="button"  Close

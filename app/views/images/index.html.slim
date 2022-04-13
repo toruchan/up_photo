@@ -1,0 +1,26 @@
+= render 'layouts/header'
+- breadcrumb :image_category, @image_category
+.container
+  .tag_title
+    ==  breadcrumbs separator: " &rsaquo; "
+  .tag_title
+    h3.left タグから選ぶ
+  .tag_list
+    - @tags.each do |tag|
+      a.btn.btn-primary href="/images/tag?tag_id=#{tag.id}&category_id=#{@image_category.id}" role="button" style="margin:2px;" #{tag.name}
+
+  .image_list
+    .title
+      h3.left 全ての画像
+    - if @images.present?
+      - @images.each do |image|
+        .contents
+          = link_to image_path(image.id)
+            = image_tag(image.image.thumb.url)
+            p = image.name
+      = paginate @images
+
+    - else
+      h3.left 該当の画像はありません
+
+= render 'layouts/footer'

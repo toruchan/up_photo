@@ -1,0 +1,81 @@
+= render 'layouts/header'
+.container
+  .detail
+    .left_block
+      / = image_tag(@movie.movie.screenshot.url)
+      = video_tag(@movie.movie.url, controls: true, width: 400, height: 300, controlslist: "nodownload")
+      p = @movie.name
+      - @movie.movie_tags.each do |tag|
+        a.btn.btn-primary.btn-sm href="/movies/tag?tag_id=#{tag.id}" style="margin-right:2px;" #{tag.name}
+
+    .left_block
+      - if user_signed_in?
+        - if current_user.plan_id.present?
+          - if current_user.download_limit.limit_of_movie > 0
+            = button_to "ダウンロード(残り#{current_user.download_limit.limit_of_movie}枚)", movie_download_path(@movie), id: 'moviedl', class: 'btn btn-info', data: { turbolinks: false, limit: current_user.download_limit.limit_of_movie}, method: :post
+          - else
+            = button_to "ダウンロード(残り#{current_user.download_limit.limit_of_movie}枚)", movie_download_path(@movie), disabled: true, class: 'btn btn-info', data: { turbolinks: false }, method: :post
+          a href="/terms#banned" ！利用可能な用途と禁止事項
+
+        - else
+          a.btn.btn-primary href="/card/new" 決済情報を登録
+      - else
+        = form_for(resource_name, as: resource_name, url: session_path(resource)) do |f|
+          .field
+            = f.label :email
+            br
+            = f.email_field :email, autofocus: true, autocomplete: "email", style: 'width:100%'
+          br
+          .field
+            = f.label :password
+            br/
+            = f.password_field :password, autocomplete: "current-password", style: 'width:100%'
+          br
+          .field
+            a
+              = link_to "パスワードをお忘れですか？", password_path(resource_name), method: :post
+          br/
+          .field
+            = f.submit "ログイン", class: 'btn btn-primary', style: 'width:100%'
+          br/
+          div
+            a アカウントをまだお持ちではない場合は
+            a href="/users/sign_up" 新規登録
+
+  .detail
+    h1 類似動画
+    - if @similar_movie.present?
+      - @similar_movie.each do |similar_movie|
+        = link_to movie_path(similar_movie.id)
+          .contents
+            = image_tag(similar_movie.movie.screenshot.url)
+            p = similar_movie.name
+    - else
+      p 類似の動画はありません
+
+  .detail
+    h1 同じモデルの動画
+    - if @movies_of_same_model.present?
+      - @movies_of_same_model.each do |mosm|
+        = link_to movie_path(mosm.id)
+          .contents
+            = image_tag(mosm.movie.screenshot.url)
+            p = mosm.name
+    - else
+      p 同じモデルの動画はありません
+
+= render 'layouts/footer'
+
+javascript:
+  $('#moviedl').click( function () {
+    var moviedl = document.getElementById('moviedl')
+    var limit = moviedl.getAttribute('data-limit')
+    limit = limit -1
+    moviedl.setAttribute('data-limit', limit)
+    moviedl.value = `ダウンロード(残り${limit}枚)`;
+    if (limit < 1){
+      $('#moviedl').prop("disabled", true);
+      $('#moviedl').closest('form').submit();
+    }
+
+  });

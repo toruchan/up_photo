@@ -1,0 +1,84 @@
+= render 'layouts/header'
+.container
+  .detail
+    .left_block
+      = image_tag(@illustration.illustration.thumb.url)
+      p = @illustration.name
+      - @illustration.illustration_tags.each do |tag|
+        a.btn.btn-primary.btn-sm href="/illustrations/tag?tag_id=#{tag.id}" style="margin-right:2px;" #{tag.name}
+
+    .right_block
+      - if user_signed_in?
+        - if current_user.plan_id.present?
+          h3.left イラストサイズ
+            #{@illustration.illustration.height} × #{@illustration.illustration.width}
+          a href="/terms#banned" ！利用可能な用途と禁止事項
+
+          - if current_user.download_limit.limit_of_illustration > 0
+            = button_to "ダウンロード(残り#{current_user.download_limit.limit_of_illustration}枚)", illustration_download_path(@illustration), id: 'illustrationdl', class: 'btn btn-info', data: { turbolinks: false, limit: current_user.download_limit.limit_of_illustration}, method: :post
+          - else
+            = button_to "ダウンロード(残り#{current_user.download_limit.limit_of_illustration}枚)", illustration_download_path(@illustration), disabled: true, class: 'btn btn-info', data: { turbolinks: false }, method: :post, style: 'background-color:#CCCCCC;border-color:#CCCCCC;'
+        - else
+          a.btn.btn-primary href="/card/new" 決済情報を登録
+
+      - else
+        = form_for(resource_name, as: resource_name, url: session_path(resource)) do |f|
+          .field
+            = f.label :email
+            br
+            = f.email_field :email, autofocus: true, autocomplete: "email", style: 'width:100%'
+          br
+          .field
+            = f.label :password
+            br/
+            = f.password_field :password, autocomplete: "current-password", style: 'width:100%'
+          br
+          .field
+            a
+              = link_to "パスワードをお忘れですか？", password_path(resource_name), method: :post
+          br/
+          .field
+            = f.submit "ログイン", class: 'btn btn-primary', style: 'width:100%'
+          br/
+          div
+            a アカウントをまだお持ちではない場合は
+            a href="/users/sign_up" 新規登録
+
+
+  .image_list
+    h3.left 類似イメージ
+    - if @similar_illustration.present?
+      - @similar_illustration.each do |similar_illustration|
+        .contents
+          = link_to illustration_path(similar_illustration.id)
+            = image_tag(similar_illustration.illustration.url)
+            p = similar_illustration.name
+    - else
+      p 類似のイラストはありません
+
+  .image_list
+    h3.left 同じモデルの画像
+    - if @illustrations_of_same_model.present?
+      - @illustrations_of_same_model.each do |iosm|
+        .contents
+          = link_to illustration_path(iosm.id)
+            = image_tag(iosm.illustration.url)
+            p = iosm.name
+    - else
+      p 同じモデルのイラストはありません
+
+= render 'layouts/footer'
+
+javascript:
+  $('#illustrationdl').click( function () {
+    var illustrationdl = document.getElementById('illustrationdl')
+    var limit = illustrationdl.getAttribute('data-limit')
+    limit = limit -1
+    illustrationdl.setAttribute('data-limit', limit)
+    illustrationdl.value = `ダウンロード(残り${limit}枚)`;
+    if (limit < 1){
+      $('#illustrationdl').prop("disabled", true);
+      $('#illustrationdl').css({'background-color':'#CCCCCC','border-color':'#CCCCCC'})
+      $('#illustrationdl').closest('form').submit();
+    }
+  });

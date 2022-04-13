@@ -1,0 +1,190 @@
+header
+  nav.navbar.navbar-expand-lg.navbar-light
+    h2.navbar-brand
+      a href="/"
+        = image_tag("logo.png")
+
+    ul.nav
+      li.nav-item.dropdown
+        a.nav-link.dropdown-toggle[data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" id="header-hover"]
+          | 画像
+        .dropdown-menu
+          - @image_categories.each do |category|
+            p.dropdown-item
+              = link_to category.name, images_path(category.id)
+      li.nav-item.dropdown
+        a.nav-link.dropdown-toggle[data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"]
+          | イラスト
+        .dropdown-menu
+          - @illustration_categories.each do |category|
+            p.dropdown-item
+              = link_to category.name, illustrations_path(category.id)
+
+      / li.nav-item.dropdown
+      /   a.nav-link.dropdown-toggle[data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"]
+      /     | 動画
+      /   .dropdown-menu
+      /     - @movie_categories.each do |category|
+      /       p.dropdown-item
+      /         = link_to category.name, movies_path(category.id)
+    ul.nav.ml-md-auto
+      - unless user_signed_in?
+        - unless controller.controller_name == "registrations"
+          li.nav-item
+            button.btn.btn-sm.btn-outline-secondary.nav-link data-target="#planModal" data-toggle="modal" type="button" style="margin-right:20px;" 料金プラン
+          li.nav-item
+            button.btn.btn-sm.btn-outline-secondary.nav-link data-target="#logInModal" data-toggle="modal" type="button" ログイン
+      - else
+        li.nav-item
+          a
+            = link_to 'マイページ', mypage_index_path, class: "nav-link"
+        li.nav-item
+          a
+            = link_to 'ログアウト', destroy_user_session_path, method: :delete, class: "nav-link"
+= render partial: 'devise/sessions/new'
+- unless user_signed_in? || controller.controller_name == "registrations"
+  = render partial: 'devise/registrations/new'
+  = render partial: 'devise/registrations/agreement'
+  = render partial: 'devise/registrations/thanks'
+= render partial: 'devise/passwords/new'
+
+#planModal.modal.fade
+  .modal-dialog
+    .modal-content
+      .modal-header
+        h5.modal-title 料金プラン
+        button.close data-dismiss="modal" type="button"
+          span ×
+      .modal-body
+        ul#myTab.nav.nav-tabs role="tablist"
+          li.nav-item
+            a#light-tab.nav-link.active aria-controls="light" aria-selected="true" data-toggle="tab" href="#light" role="tab" ライト
+          li.nav-item
+            a#basic-tab.nav-link aria-controls="basic" aria-selected="false" data-toggle="tab" href="#basic" role="tab"  ベーシック
+          li.nav-item
+            a#royal-tab.nav-link aria-controls="royal" aria-selected="false" data-toggle="tab" href="#royal" role="tab"  ロイヤル
+          li.nav-item
+            a#professional-tab.nav-link aria-controls="professional" aria-selected="false" data-toggle="tab" href="#professional" role="tab"  プロフェッショナル
+
+        #myTabContent.tab-content
+          #light.tab-pane.fade.show.active aria-labelledby="light-tab" role="tabpanel"
+            
+            table
+              tr
+                th
+                th.category 契約期間
+                th.title 画像/イラスト
+                //th.contributor イラスト
+                //th.posted 動画
+                th.replies 月額料金
+              tr.content
+                td.plan_1
+                  input.plan_1.form-check-input#plan_1 name="groupOfMaterialRadios" type="radio" value=1 checked=true
+                  label.form-check-label for="materialGroupExample1"
+                td.plan_1 = "#{@plans[0].period_i18n}"
+                td.plan_1 = "月#{@plans[0].limit_of_image}枚"
+                //td.plan_1 = "月#{@plans[0].limit_of_illustration}枚"
+                // td.plan_1 = "月#{@plans[0].limit_of_movie}本"
+                td.plan_1 = "￥#{@plans[0].price.to_s(:delimited)}"
+              tr.content
+                td.plan_2
+                  input.plan_2.form-check-input#plan_2 name="groupOfMaterialRadios" type="radio" value=2
+                  label.form-check-label for="materialGroupExample2"
+                    td.plan_2 = "#{@plans[1].period_i18n}"
+                    td.plan_2 = "月#{@plans[1].limit_of_image}枚"
+                    //td.plan_2 = "月#{@plans[1].limit_of_illustration}枚"
+                    //td.plan_2 = "月#{@plans[1].limit_of_movie}本"
+                    td.plan_2 = "￥#{@plans[1].price.to_s(:delimited)}"
+
+          #basic.tab-pane.fade.show aria-labelledby="basic-tab" role="tabpanel"
+            table
+              tr
+                th
+                th.category 契約期間
+                th.title 画像/イラスト
+                //th.contributor イラスト
+                //th.posted 動画
+                th.replies 月額料金
+              tr.content
+                td.plan_3
+                  input.plan_3.form-check-input#plan_3 name="groupOfMaterialRadios" type="radio" value=3
+                  label.form-check-label for="materialGroupExample3"
+                td.plan_3 = "#{@plans[2].period_i18n}"
+                td.plan_3 = "月#{@plans[2].limit_of_image}枚"
+                //td.plan_3 = "月#{@plans[2].limit_of_illustration}枚"
+                //td.plan_3 = "月#{@plans[2].limit_of_movie}本"
+                td.plan_3 = "￥#{@plans[2].price.to_s(:delimited)}"
+              tr.content
+                td.plan_4
+                  input.plan_4.form-check-input#plan_4 name="groupOfMaterialRadios" type="radio" value=4
+                  label.form-check-label for="materialGroupExample4"
+                td.plan_4 = "#{@plans[3].period_i18n}"
+                td.plan_4 = "月#{@plans[3].limit_of_image}枚"
+                //td.plan_4 = "月#{@plans[3].limit_of_illustration}枚"
+                //td.plan_4 = "月#{@plans[3].limit_of_movie}本"
+                td.plan_4 = "￥#{@plans[3].price.to_s(:delimited)}"
+
+          #royal.tab-pane.fade.show aria-labelledby="royal-tab" role="tabpanel"
+            table
+              tr
+                th
+                th.category 契約期間
+                th.title 画像/イラスト
+                //th.contributor イラスト
+                //th.posted 動画
+                th.replies 月額料金
+              tr.content
+                td.plan_5
+                  input.plan_5.form-check-input#plan_5 name="groupOfMaterialRadios" type="radio" value=5
+                  label.form-check-label for="materialGroupExample5"
+                td.plan_5 = "#{@plans[4].period_i18n}"
+                td.plan_5 = "月#{@plans[4].limit_of_image}枚"
+                //td.plan_5 = "月#{@plans[4].limit_of_illustration}枚"
+                //td.plan_5 = "月#{@plans[4].limit_of_movie}本"
+                td.plan_5 = "￥#{@plans[4].price.to_s(:delimited)}"
+              tr.content
+                td.plan_6
+                  input.plan_6.form-check-input#plan_6 name="groupOfMaterialRadios" type="radio" value=6
+                  label.form-check-label for="materialGroupExample6"
+                td.plan_6 = "#{@plans[5].period_i18n}"
+                td.plan_6 = "月#{@plans[5].limit_of_image}枚"
+                //td.plan_6 = "月#{@plans[5].limit_of_illustration}枚"
+                //td.plan_6 = "月#{@plans[5].limit_of_movie}本"
+                td.plan_6 = "￥#{@plans[5].price.to_s(:delimited)}"
+
+          #professional.tab-pane.fade.show aria-labelledby="professional-tab" role="tabpanel"
+            table
+              tr
+                th
+                th.category 契約期間
+                th.title 画像/イラスト
+                //th.contributor イラスト
+                //th.posted 動画
+                th.replies 月額料金
+              tr.content
+                td.plan_7
+                  input.plan_7.form-check-input#plan_7 name="groupOfMaterialRadios" type="radio" value=7
+                  label.form-check-label for="materialGroupExample7"
+                td.plan_7 = "#{@plans[6].period_i18n}"
+                td.plan_7 = "月#{@plans[6].limit_of_image}枚"
+                //td.plan_7 = "月#{@plans[6].limit_of_illustration}枚"
+                //td.plan_7 = "月#{@plans[6].limit_of_movie}本"
+                td.plan_7 = "￥#{@plans[6].price.to_s(:delimited)}"
+              tr.content
+                td.plan_8
+                  input.plan_8.form-check-input#plan_8 name="groupOfMaterialRadios" type="radio" value=7
+                  label.form-check-label for="materialGroupExample8"
+                td.plan_8 = "#{@plans[7].period_i18n}"
+                td.plan_8 = "月#{@plans[7].limit_of_image}枚"
+                //td.plan_8 = "月#{@plans[7].limit_of_illustration}枚"
+                //td.plan_8 = "月#{@plans[7].limit_of_movie}本"
+                td.plan_8 = "￥#{@plans[7].price.to_s(:delimited)}"
+      - unless (user_signed_in? || controller.controller_name == "registrations")
+        .modal-body
+          div
+            br/
+            //a.btn.btn-success.mt10 href="/users/sign_up" style="width:100%" アカウント登録へ
+            button.btn.btn-success.mt10 id="planToRegistration" style="width:100%;border-top:1px solid #e9ecef;margin-right:5px;" data-target="#registrationModal" data-toggle="modal"  アカウントを作成
+            / - render "devise/shared/links"
+      .modal-footer
+        button.btn.btn-danger data-dismiss="modal" type="button"  Close
